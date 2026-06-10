@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Interfaces/RepairableInterface.h"
 #include "Structs/RepairableData.h"
+#include "Components/StaticMeshComponent.h"
 #include "RepairableObject.generated.h"
 
 
@@ -34,10 +35,23 @@ public:
 	virtual void CompleteRepair_Implementation() override;
 	virtual float GetRepairTime_Implementation() override;
 	virtual FName GetRepairID_Implementation() override;
+	virtual void OnDetectionLost_Implementation() override;
 private:
 	UPROPERTY(EditAnywhere, category = "Repair", meta = (AllowPrivateAccess = "true"))
 	FRepairableData RepairData;
 	
 	UPROPERTY(EditAnywhere, category = "Repair", meta = (AllowPrivateAccess = "true"))
 	bool bRepaired=false;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UStaticMeshComponent> Mesh;
+
+	UPROPERTY(EditAnywhere, Category="Materials", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UMaterialInterface> DefaultMaterial;
+
+	UPROPERTY(EditAnywhere, Category="Materials", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UMaterialInterface> DetectedMaterial;
+
+	UPROPERTY(EditAnywhere, Category="Materials", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UMaterialInterface> RepairedMaterial;
 };

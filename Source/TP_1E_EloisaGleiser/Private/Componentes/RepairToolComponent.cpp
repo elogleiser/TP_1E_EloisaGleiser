@@ -78,19 +78,36 @@ void URepairToolComponent::DetectRepairable()
 		{
 			bDetectedRepairable = true;
 
-				if (CurrentDetectedActor != HitActor)
+			if (CurrentDetectedActor != HitActor)
+			{
+				if (CurrentDetectedActor &&
+					CurrentDetectedActor->GetClass()->ImplementsInterface(URepairableInterface::StaticClass()))
 				{
-					CurrentDetectedActor = HitActor;
-					IRepairableInterface::Execute_OnDetected(HitActor);
+					IRepairableInterface::Execute_OnDetectionLost(CurrentDetectedActor);
 				}
+
+				CurrentDetectedActor = HitActor;
+				IRepairableInterface::Execute_OnDetected(HitActor);
+			}
 			}
 			else
 			{
+				if (CurrentDetectedActor && CurrentDetectedActor->GetClass()->ImplementsInterface(URepairableInterface::StaticClass()))
+				{
+					IRepairableInterface::Execute_OnDetectionLost(CurrentDetectedActor);
+				}
+
 				CurrentDetectedActor = nullptr;
 			}
 		}
 		else
 		{
+			if (CurrentDetectedActor &&
+		CurrentDetectedActor->GetClass()->ImplementsInterface(URepairableInterface::StaticClass()))
+			{
+				IRepairableInterface::Execute_OnDetectionLost(CurrentDetectedActor);
+			}
+
 			CurrentDetectedActor = nullptr;
 		}
 
@@ -181,7 +198,16 @@ void URepairToolComponent::CompleteRepair()
 	{
 		return;
 	}
+	
+	FName CompletedID = IRepairableInterface::Execute_GetRepairID(CurrentRepairTarget);
+	
 	IRepairableInterface::Execute_CompleteRepair(CurrentRepairTarget);
+	
+	RepairedObjectsCodex.AddUnique(CompletedID);
+	
+	PrintCodex();
+	
+	OnRepairCompleted.Broadcast(CompletedID);
 	
 	bIsRepairing = false;
 	CurrentRepairProgress=0.f;
@@ -191,4 +217,26 @@ void URepairToolComponent::CompleteRepair()
 	{
 		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Green, TEXT("Reparacion Completada"));
 	}
+}
+
+void URepairToolComponent::PrintCodex() const
+{
+	if (!GEngine)
+	{
+		return;
+	}
+	
+	FString CodexText = TEXT("CODEX - Objetos Reparados: \n");
+	
+	for (const FName& RepairID : RepairedObjectsCodex)
+	{
+		CodexText += TEXT("- ") + RepairID.ToString() + TEXT("\n");
+	}
+	
+	GEngine->AddOnScreenDebugMessage(
+		100,
+		5.f,
+		FColor::Cyan,
+		CodexText
+	);
 }

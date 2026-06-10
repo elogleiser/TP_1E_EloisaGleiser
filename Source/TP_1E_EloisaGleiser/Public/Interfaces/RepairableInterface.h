@@ -41,4 +41,6 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Repair")
 	FName GetRepairID();
 	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnDetectionLost();
 };

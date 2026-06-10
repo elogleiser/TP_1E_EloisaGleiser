@@ -8,7 +8,10 @@
 ARepairableObject::ARepairableObject()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+	
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	RootComponent = Mesh;
 }
 
 // Called when the game starts or when spawned
@@ -26,6 +29,16 @@ void ARepairableObject::Tick(float DeltaTime)
 
 void ARepairableObject::OnDetected_Implementation()
 {
+	if (bRepaired)
+	{
+		return;
+	}
+	
+	if (Mesh && DetectedMaterial)
+	{
+		Mesh->SetMaterial(0, DetectedMaterial);
+	}
+
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Yellow,TEXT("Detectado: ")+RepairData.DisplayName);
@@ -50,6 +63,10 @@ void ARepairableObject::CancelRepair_Implementation()
 void ARepairableObject::CompleteRepair_Implementation()
 {
 	bRepaired = true;
+	if (Mesh && RepairedMaterial)
+	{
+		Mesh->SetMaterial(0, RepairedMaterial);
+	}
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Green,TEXT("Se completo la reparacion"));
@@ -64,5 +81,18 @@ float ARepairableObject::GetRepairTime_Implementation()
 FName ARepairableObject::GetRepairID_Implementation()
 {
 	return RepairData.RepairID;
+}
+
+void ARepairableObject::OnDetectionLost_Implementation()
+{
+	if (bRepaired)
+	{
+		return;
+	}
+
+	if (Mesh && DefaultMaterial)
+	{
+		Mesh->SetMaterial(0, DefaultMaterial);
+	}
 }
 

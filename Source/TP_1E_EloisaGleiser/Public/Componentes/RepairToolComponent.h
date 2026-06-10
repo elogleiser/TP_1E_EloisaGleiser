@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "RepairToolComponent.generated.h"
 
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRepairCompleted,FName,RepairID);
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class TP_1E_ELOISAGLEISER_API URepairToolComponent : public UActorComponent
 {
@@ -29,6 +29,12 @@ public:
 	void StartRepair();
 	void CancelRepair();
 	
+	UPROPERTY(BlueprintAssignable, Category = "Repair Events")
+	FOnRepairCompleted OnRepairCompleted;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Repair Codex", meta = (AllowPrivateAccess = "true"))
+	TArray<FName> RepairedObjectsCodex;
+	
 private:
 	
 	UPROPERTY(EditAnywhere, category = "Repair", meta = (AllowPrivateAccess = "true"))
@@ -49,5 +55,6 @@ private:
 	void CompleteRepair();
 	void UpdateRepair(float DeltaTime);
 	
+	void PrintCodex() const;
 	
 };
