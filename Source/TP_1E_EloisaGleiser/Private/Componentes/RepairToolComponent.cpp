@@ -111,7 +111,7 @@ void URepairToolComponent::DetectRepairable()
 			CurrentDetectedActor = nullptr;
 		}
 
-		DrawDebugLine(GetWorld(),Start,End,bDetectedRepairable ? FColor::Green : FColor::Red,false,1.f,0,2.f);
+		
 	}
 
 
@@ -133,10 +133,7 @@ void URepairToolComponent::StartRepair()
 	
 	IRepairableInterface::Execute_StartRepair(CurrentRepairTarget);
 	
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1,0,FColor::Green,TEXT("Reparacion Iniciada"));
-	}
+	
 }
 
 void URepairToolComponent::CancelRepair()
@@ -155,10 +152,7 @@ void URepairToolComponent::CancelRepair()
 	CurrentRepairProgress=0.f;
 	CurrentRepairTarget = nullptr;
 	
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1,0,FColor::Green,TEXT("Reparacion Cancelada"));
-	}
+	
 }
 
 
@@ -213,10 +207,7 @@ void URepairToolComponent::CompleteRepair()
 	CurrentRepairProgress=0.f;
 	CurrentRepairTarget = nullptr;
 	
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Green, TEXT("Reparacion Completada"));
-	}
+	
 }
 
 void URepairToolComponent::PrintCodex() const
@@ -233,10 +224,5 @@ void URepairToolComponent::PrintCodex() const
 		CodexText += TEXT("- ") + RepairID.ToString() + TEXT("\n");
 	}
 	
-	GEngine->AddOnScreenDebugMessage(
-		100,
-		5.f,
-		FColor::Cyan,
-		CodexText
-	);
+	GEngine->AddOnScreenDebugMessage(100,5.f,FColor::White,CodexText);
 }

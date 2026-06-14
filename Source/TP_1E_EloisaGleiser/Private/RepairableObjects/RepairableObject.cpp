@@ -38,26 +38,32 @@ void ARepairableObject::OnDetected_Implementation()
 	{
 		Mesh->SetMaterial(0, DetectedMaterial);
 	}
-
+	
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Yellow,TEXT("Detectado: ")+RepairData.DisplayName);
-
+		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Orange,TEXT("Objeto detectado: ") + RepairData.DisplayName + TEXT("\n Presione la ´E´ para reparar"));
 	}
+	
+	
 }
 
 void ARepairableObject::StartRepair_Implementation()
 {
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Yellow,TEXT("Objeto comenzando reparacion"));
-	
+		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Yellow,TEXT("Comenzando reparacion de: ") + RepairData.DisplayName);
 	}
+	
+	
 }
 
 void ARepairableObject::CancelRepair_Implementation()
 {
-	GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Yellow,TEXT("Se cancelo la reparacion"));
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Red,TEXT("Reparacion cancelada de: ") + RepairData.DisplayName);
+	}
+	
 }
 
 void ARepairableObject::CompleteRepair_Implementation()
@@ -69,7 +75,7 @@ void ARepairableObject::CompleteRepair_Implementation()
 	}
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Green,TEXT("Se completo la reparacion"));
+		GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Green, TEXT("Se reparo exitosamente: ") + RepairData.DisplayName);
 	}
 	
 }
