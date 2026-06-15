@@ -14,8 +14,5 @@ struct FRepairableData
 	FString DisplayName = "Repairable Object";
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Repair Data")
-	FString Description = "Object that can be repaired";
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Repair Data")
 	float RepairTime = 3.f;
 };
