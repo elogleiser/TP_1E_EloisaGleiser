@@ -101,7 +101,10 @@ private:
 	UPROPERTY(VisibleAnywhere, Category="Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class URepairToolComponent> RepairToolComponent;
 	
+	UFUNCTION()
 	void RepairPressed();
+
+	UFUNCTION()
 	void RepairReleased();
 	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Input", meta = (AllowPrivateAccess = "true"))

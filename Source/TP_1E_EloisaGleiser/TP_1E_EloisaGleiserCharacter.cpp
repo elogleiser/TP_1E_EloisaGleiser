@@ -69,7 +69,9 @@ void ATP_1E_EloisaGleiserCharacter::SetupPlayerInputComponent(UInputComponent* P
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATP_1E_EloisaGleiserCharacter::Look);
 		
 		EnhancedInputComponent->BindAction(RepairAction, ETriggerEvent::Started, this, &ATP_1E_EloisaGleiserCharacter::RepairPressed);
+		
 		EnhancedInputComponent->BindAction(RepairAction, ETriggerEvent::Completed, this, &ATP_1E_EloisaGleiserCharacter::RepairReleased);
+		
 		EnhancedInputComponent->BindAction(RepairAction, ETriggerEvent::Canceled, this, &ATP_1E_EloisaGleiserCharacter::RepairReleased);
 	}
 	else

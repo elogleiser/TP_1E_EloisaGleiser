@@ -26,7 +26,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 	
+	UFUNCTION()
 	void StartRepair();
+	
+	UFUNCTION()
 	void CancelRepair();
 	
 	UPROPERTY(BlueprintAssignable, Category = "Repair Events")
@@ -43,18 +46,25 @@ private:
 	UPROPERTY()
 	TObjectPtr<class AActor> CurrentDetectedActor;
 	
-	void DetectRepairable();
-	
+	UPROPERTY(VisibleAnywhere, Category = "Repair State", meta = (AllowPrivateAccess = "true"))
 	bool bIsRepairing = false;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Repair State", meta = (AllowPrivateAccess = "true"))
 	float CurrentRepairProgress = 0.f;
 	
 	UPROPERTY()
 	TObjectPtr<class AActor> CurrentRepairTarget;
 	
+	UFUNCTION()
+	void DetectRepairable();
 
+	UFUNCTION()
 	void CompleteRepair();
+	
+	UFUNCTION()
 	void UpdateRepair(float DeltaTime);
 	
+	UFUNCTION()
 	void PrintCodex() const;
 	
 };

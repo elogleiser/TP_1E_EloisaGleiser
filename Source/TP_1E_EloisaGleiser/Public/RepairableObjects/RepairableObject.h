@@ -29,13 +29,27 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
+	UFUNCTION()
 	virtual void OnDetected_Implementation() override;
+	
+	UFUNCTION()
 	virtual void StartRepair_Implementation() override;
+	
+	UFUNCTION()
 	virtual void CancelRepair_Implementation() override;
+	
+	UFUNCTION()
 	virtual void CompleteRepair_Implementation() override;
+	
+	UFUNCTION()
 	virtual float GetRepairTime_Implementation() override;
+	
+	UFUNCTION()
 	virtual FName GetRepairID_Implementation() override;
+	
+	UFUNCTION()
 	virtual void OnDetectionLost_Implementation() override;
+	
 private:
 	UPROPERTY(EditAnywhere, category = "Repair", meta = (AllowPrivateAccess = "true"))
 	FRepairableData RepairData;
