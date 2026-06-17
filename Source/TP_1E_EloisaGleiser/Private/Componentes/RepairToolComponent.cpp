@@ -80,8 +80,7 @@ void URepairToolComponent::DetectRepairable()
 
 			if (CurrentDetectedActor != HitActor)
 			{
-				if (CurrentDetectedActor &&
-					CurrentDetectedActor->GetClass()->ImplementsInterface(URepairableInterface::StaticClass()))
+				if (CurrentDetectedActor &&CurrentDetectedActor->GetClass()->ImplementsInterface(URepairableInterface::StaticClass()))
 				{
 					IRepairableInterface::Execute_OnDetectionLost(CurrentDetectedActor);
 				}
@@ -102,8 +101,7 @@ void URepairToolComponent::DetectRepairable()
 		}
 		else
 		{
-			if (CurrentDetectedActor &&
-		CurrentDetectedActor->GetClass()->ImplementsInterface(URepairableInterface::StaticClass()))
+			if (CurrentDetectedActor &&CurrentDetectedActor->GetClass()->ImplementsInterface(URepairableInterface::StaticClass()))
 			{
 				IRepairableInterface::Execute_OnDetectionLost(CurrentDetectedActor);
 			}
@@ -224,5 +222,4 @@ void URepairToolComponent::PrintCodex() const
 		CodexText += TEXT("- ") + RepairID.ToString() + TEXT("\n");
 	}
 	
-	GEngine->AddOnScreenDebugMessage(100,5.f,FColor::White,CodexText);
 }

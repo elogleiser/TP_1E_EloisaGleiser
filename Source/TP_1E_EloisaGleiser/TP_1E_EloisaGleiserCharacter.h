@@ -98,7 +98,7 @@ public:
 	
 private:
 	
-	UPROPERTY(VisibleAnywhere, Category="Components", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly,Category="Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class URepairToolComponent> RepairToolComponent;
 	
 	UFUNCTION()
