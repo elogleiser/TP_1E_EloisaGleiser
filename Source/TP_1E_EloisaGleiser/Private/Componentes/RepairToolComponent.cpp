@@ -125,6 +125,14 @@ void URepairToolComponent::StartRepair()
 		return;
 	}
 	
+	if (IRepairableInterface::Execute_IsRepaired(CurrentDetectedActor))
+	{
+		if (GEngine)
+		{GEngine->AddOnScreenDebugMessage(-1,2.f,FColor::Green,TEXT("Este objeto ya fue reparado"));
+		}
+
+		return;
+	}
 	bIsRepairing = true;
 	CurrentRepairProgress=0.f;
 	CurrentRepairTarget= CurrentDetectedActor;
@@ -171,11 +179,11 @@ void URepairToolComponent::UpdateRepair(float DeltaTime)
 	CurrentRepairProgress+=DeltaTime;
 	
 	float RequiredRepairTime = IRepairableInterface::Execute_GetRepairTime(CurrentRepairTarget);
-	
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1,0,FColor::Cyan,TEXT("Progreso: ")+FString::SanitizeFloat(CurrentRepairProgress));
-	}
+
+	float ProgressPercent = CurrentRepairProgress / RequiredRepairTime;
+	ProgressPercent = FMath::Clamp(ProgressPercent, 0.f, 1.f);
+
+	OnRepairProgress.Broadcast(ProgressPercent);
 	
 	if (CurrentRepairProgress >= RequiredRepairTime)
 	{

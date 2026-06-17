@@ -43,4 +43,7 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnDetectionLost();
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Repair")
+    bool IsRepaired();
 };

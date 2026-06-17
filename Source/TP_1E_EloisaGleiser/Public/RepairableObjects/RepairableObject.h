@@ -50,6 +50,10 @@ public:
 	UFUNCTION()
 	virtual void OnDetectionLost_Implementation() override;
 	
+	UFUNCTION()
+	virtual bool IsRepaired_Implementation() override;
+	
+	
 private:
 	UPROPERTY(EditAnywhere, category = "Repair", meta = (AllowPrivateAccess = "true"))
 	FRepairableData RepairData;

@@ -7,6 +7,7 @@
 #include "RepairToolComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRepairCompleted,FName,RepairID);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRepairProgress, float, ProgressPercent);
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class TP_1E_ELOISAGLEISER_API URepairToolComponent : public UActorComponent
 {
@@ -37,6 +38,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, Category = "Repair Codex", meta = (AllowPrivateAccess = "true"))
 	TArray<FName> RepairedObjectsCodex;
+	
+	UPROPERTY(BlueprintAssignable, Category="Repair Events")
+	FOnRepairProgress OnRepairProgress;
 	
 private:
 	

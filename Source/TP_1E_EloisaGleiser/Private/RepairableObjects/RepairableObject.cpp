@@ -102,3 +102,8 @@ void ARepairableObject::OnDetectionLost_Implementation()
 	}
 }
 
+bool ARepairableObject::IsRepaired_Implementation()
+{
+	return bRepaired;
+}
+
